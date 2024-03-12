@@ -3,10 +3,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.boot.CommandLineRunner;
-import spring.course.application.model.WeatherConditions;
-import spring.course.application.repository.WeatherConditionsRepository;
-import spring.course.application.weatherdataInsertion.WeatherDataInsertion;
+import spring.course.application.dataaccess.WeatherDataInsertion;
 
 import java.io.IOException;
 

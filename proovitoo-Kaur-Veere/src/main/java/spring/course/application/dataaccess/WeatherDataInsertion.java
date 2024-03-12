@@ -1,10 +1,9 @@
-package spring.course.application.weatherdataInsertion;
+package spring.course.application.dataaccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 public class WeatherDataInsertion {
     public static void insertData(int timestamp, String name, int wmocode, double airTemp, double windSpeed, String phenomenom) {
