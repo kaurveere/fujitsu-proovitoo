@@ -17,7 +17,6 @@ public class Main {
 	@Bean
 	CommandLineRunner commandLineRunner(WeatherConditionsRepository repository) {
 		return args -> {
-			//add testdata
 			repository.save(new WeatherConditions(null, 123 ,"Tartu", 456, 10.0, 5.0, ""));
 		};
 	}
