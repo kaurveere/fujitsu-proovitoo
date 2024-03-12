@@ -3,6 +3,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.boot.CommandLineRunner;
+import spring.course.application.model.WeatherConditions;
+import spring.course.application.repository.WeatherConditionsRepository;
+import spring.course.application.weatherdataInsertion.WeatherDataInsertion;
 
 import java.io.IOException;
 
@@ -32,15 +36,17 @@ public class WebScraper {
                     double windSpeed = Double.parseDouble(stationElement.select("windspeed").text().trim());
                     String phenomenon = stationElement.select("phenomenom").text().trim();
 
-
-                    // Print the extracted data
+                    /*
                     System.out.println("Timestamp: " + timestamp);
                     System.out.println("Name: " + name);
                     System.out.println("Wmocode: " + wmocode);
                     System.out.println("Air temperature: " + airTemp);
                     System.out.println("Windspeed: " + windSpeed);
                     System.out.println("Phenomenom: " + phenomenon);
-                    System.out.println("--------------");
+                     */
+
+                    WeatherDataInsertion.insertData(timestamp, name, wmocode, airTemp, windSpeed, phenomenon);
+
                 }
             }
         } catch (IOException e) {
