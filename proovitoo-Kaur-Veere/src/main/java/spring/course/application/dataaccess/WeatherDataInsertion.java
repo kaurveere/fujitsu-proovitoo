@@ -14,7 +14,12 @@ public class WeatherDataInsertion {
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
                 preparedStatement.setInt(1, timestamp);
-                preparedStatement.setString(2, name);
+                switch (name) {
+                    case "Pärnu" -> preparedStatement.setString(2, "Pärnu");
+                    case "Tallinn-Harku" -> preparedStatement.setString(2, "Tallinn");
+                    case "Tartu-Tõravere" -> preparedStatement.setString(2, "Tartu");
+                    default -> preparedStatement.setString(2, "Wrong city name");
+                }
                 preparedStatement.setInt(3, wmocode);
                 preparedStatement.setDouble(4, airTemp);
                 preparedStatement.setDouble(5, windSpeed);

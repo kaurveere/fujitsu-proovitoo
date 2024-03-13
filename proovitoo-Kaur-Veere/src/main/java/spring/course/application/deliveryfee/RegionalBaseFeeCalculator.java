@@ -1,7 +1,7 @@
 package spring.course.application.deliveryfee;
 
 public class RegionalBaseFeeCalculator { //Calculates regional base fee
-    public double calculateRegionalBaseFee(String city, VehicleType vehicleType) {
+    public static double calculateRegionalBaseFee(String city, VehicleType vehicleType) {
         return switch (city) {
             case "Tallinn" -> calculateTallinnRegionalBaseFee(vehicleType);
             case "Tartu" -> calculateTartuRegionalBaseFee(vehicleType);
@@ -10,7 +10,7 @@ public class RegionalBaseFeeCalculator { //Calculates regional base fee
         };
     }
 
-    private double calculateTallinnRegionalBaseFee(VehicleType vehicleType) {
+    private static double calculateTallinnRegionalBaseFee(VehicleType vehicleType) {
         return switch (vehicleType) {
             case CAR -> 4.0;
             case SCOOTER -> 3.5;
@@ -18,7 +18,7 @@ public class RegionalBaseFeeCalculator { //Calculates regional base fee
             default -> 0.0;
         };
     }
-    private double calculateTartuRegionalBaseFee(VehicleType vehicleType) {
+    private static double calculateTartuRegionalBaseFee(VehicleType vehicleType) {
         return switch (vehicleType) {
             case CAR -> 3.5;
             case SCOOTER -> 3.0;
@@ -26,7 +26,7 @@ public class RegionalBaseFeeCalculator { //Calculates regional base fee
             default -> 0.0;
         };
     }
-    private double calculateParnuRegionalBaseFee(VehicleType vehicleType) {
+    private static double calculateParnuRegionalBaseFee(VehicleType vehicleType) {
         return switch (vehicleType) {
             case CAR -> 3.0;
             case SCOOTER -> 2.5;
