@@ -24,7 +24,7 @@ public class WeatherDataService { //Retrieves weather data from the database.
                         dfr.setTemperature(temperature);
                         dfr.setWindspeed(windSpeed);
                         //printing the retrieved data
-                        System.out.println("ID: " + id + ", Name: " + name + ", Phenomenom: " + phenomenon + ", Windspeed: " + windSpeed + ", Temperature: " + temperature);
+                        //System.out.println("ID: " + id + ", Name: " + name + ", Phenomenom: " + phenomenon + ", Windspeed: " + windSpeed + ", Temperature: " + temperature);
                     } else {
                         System.out.println("No data found.");
                     }
