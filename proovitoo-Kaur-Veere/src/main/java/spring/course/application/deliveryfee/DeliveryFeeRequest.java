@@ -2,7 +2,7 @@ package spring.course.application.deliveryfee;
 
 public class DeliveryFeeRequest {//class to store weather data
     private String name;
-    private String phenomenom;
+    private String phenomenon;
     private double temperature;
     private double windspeed;
 
@@ -13,8 +13,8 @@ public class DeliveryFeeRequest {//class to store weather data
         this.name = name;
     }
 
-    public void setPhenomenom(String phenomenom) {
-        this.phenomenom = phenomenom;
+    public void setPhenomenon(String phenomenon) {
+        this.phenomenon = phenomenon;
     }
 
     public void setTemperature(double temperature) {
@@ -29,8 +29,8 @@ public class DeliveryFeeRequest {//class to store weather data
         return name;
     }
 
-    public String getPhenomenom() {
-        return phenomenom;
+    public String getPhenomenon() {
+        return phenomenon;
     }
 
     public double getTemperature() {

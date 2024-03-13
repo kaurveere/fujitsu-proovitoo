@@ -1,6 +1,7 @@
 package spring.course.application.controllers;
 
 import org.quartz.SchedulerException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import spring.course.application.dataaccess.WeatherDataService;
@@ -21,8 +22,14 @@ public class UserController {
     public void scrapejob() throws SchedulerException {
         WebScrapingScheduler.main(null);
     }
-    @PostMapping("/retrievedata")
-    public void retriveData(){
-        WeatherDataService.retrieveData(2);
+    @PostMapping("/retrievedata/{city}")
+    public void retriveData(@PathVariable String city){
+        switch (city) {
+            case "tallinn" -> WeatherDataService.retrieveData(1);
+            case "tartu" -> WeatherDataService.retrieveData(2);
+            case "parnu" -> WeatherDataService.retrieveData(0);
+            default -> System.out.println("Viga");
+        }
     }
+
 }
