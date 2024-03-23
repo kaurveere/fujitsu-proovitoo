@@ -1,15 +1,16 @@
 package spring.course.application.controllers;
 
-import org.quartz.SchedulerException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import spring.course.application.service.WeatherDataAccess;
-import spring.course.application.deliveryfee.VehicleType;
+import spring.course.application.model.constants.City;
+import spring.course.application.model.constants.VehicleType;
 import spring.course.application.webscraping.WebScraper;
 
-import static spring.course.application.deliveryfee.DeliveryFeeCalculator.deliveryFeeRequest;
+import java.sql.Timestamp;
+
+import static spring.course.application.controllers.FeeCalculator.calculateFee;
 
 @RestController
 public class UserController {
@@ -19,13 +20,17 @@ public class UserController {
     public void scrape(){
         WebScraper.scrape();
     }
-    @PostMapping("/retrievedata/{city}")
-    public void retriveData(@PathVariable String city){
-        WeatherDataAccess.retrieveData(city);
-    }
     @GetMapping("calculate/{city}/{vehicle}")
-    public double calculate(@PathVariable String city, @PathVariable VehicleType vehicle){
-        return deliveryFeeRequest(city, vehicle);
+    public double getFee(@PathVariable("city") City city,
+                         @PathVariable("vehicle") VehicleType vehicle) {
+        return calculateFee(city, vehicle, new Timestamp(System.currentTimeMillis()));
+    }
+    @GetMapping("calculate/{city}/{vehicle}/{timestamp}")
+    public double getFee(@PathVariable("city") City city,
+                         @PathVariable("vehicle") VehicleType vehicle,
+                         @PathVariable(name = "timestamp") String timestamp) {
+        System.out.println(timestamp);
+        return calculateFee(city, vehicle, Timestamp.valueOf(timestamp));
     }
 
 }

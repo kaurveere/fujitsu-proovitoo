@@ -12,7 +12,7 @@ public class WeatherDataInsertion {
                     case "Pärnu" -> preparedStatement.setString(2, "pärnu");
                     case "Tallinn-Harku" -> preparedStatement.setString(2, "tallinn");
                     case "Tartu-Tõravere" -> preparedStatement.setString(2, "tartu");
-                    default -> preparedStatement.setString(2, "Wrong city name");
+                    default -> System.out.println("Wrong city name");
                 }
                 preparedStatement.setInt(3, wmocode);
                 preparedStatement.setDouble(4, airTemp);

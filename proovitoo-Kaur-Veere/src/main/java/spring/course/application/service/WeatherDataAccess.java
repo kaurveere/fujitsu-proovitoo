@@ -1,33 +1,39 @@
 package spring.course.application.service;
 
-import spring.course.application.deliveryfee.DeliveryFeeRequest;
+import spring.course.application.deliveryfee.WeatherInformation;
+import spring.course.application.model.constants.City;
 
 import java.sql.*;
 
 public class WeatherDataAccess { //Retrieves weather data from the database.
-    public static DeliveryFeeRequest retrieveData(String name) {
-        DeliveryFeeRequest dfr = new DeliveryFeeRequest();
+    public static WeatherInformation retrieveData(City name, Timestamp timestamp) {
+        WeatherInformation dfr = new WeatherInformation();
         try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:weather", "sa", "")) {
-            String query = "SELECT * FROM weather WHERE name  = \'"+ name +"\'  AND id = (SELECT MAX(id) FROM weather WHERE name = \'"+ name +"\')";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.last()) {
-                        int id = resultSet.getInt("id");
-                        //Getting the relevant data
-                        String cityName = resultSet.getString("name");
-                        String phenomenon = resultSet.getString("phenomenon");
-                        double windSpeed = resultSet.getDouble("windspeed");
-                        double temperature = resultSet.getDouble("temperature");
-                        // Process retrieved data
-                        dfr.setName(cityName);
-                        dfr.setPhenomenon(phenomenon);
-                        dfr.setTemperature(temperature);
-                        dfr.setWindspeed(windSpeed);
+            String query = "SELECT * FROM weather WHERE name = ? ORDER BY ABS(TIMESTAMPDIFF(SECOND, timestamp, ?)) LIMIT 1";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
 
-                    } else {
-                        System.out.println("No data found.");
-                    }
+                statement.setString(1, String.valueOf(name));
+                statement.setTimestamp(2, timestamp);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.last()) {
+
+                    //Getting the relevant data
+                    String cityName = resultSet.getString("name");
+                    String phenomenon = resultSet.getString("phenomenon");
+                    double windSpeed = resultSet.getDouble("windspeed");
+                    double temperature = resultSet.getDouble("temperature");
+                    // Process retrieved data
+                    dfr.setName(cityName);
+                    dfr.setPhenomenon(phenomenon);
+                    dfr.setTemperature(temperature);
+                    dfr.setWindspeed(windSpeed);
+
+                } else {
+                    System.out.println("No data found.");
                 }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
