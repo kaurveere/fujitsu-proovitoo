@@ -5,9 +5,9 @@ public class ExtraFeeCalculator { //Calculates extra fees
     public static double calculateExtraFee(double temperature, double windSpeed, String weatherPhenomenon, VehicleType vehicleType) {
         double extraFee = 0.0;
 
-        if (vehicleType == VehicleType.SCOOTER || vehicleType == VehicleType.BIKE) {
+        if (vehicleType == VehicleType.scooter || vehicleType == VehicleType.bike) {
             extraFee += calculateAirTemperatureExtraFee(temperature);
-            if (vehicleType == VehicleType.BIKE) {
+            if (vehicleType == VehicleType.bike) {
                 extraFee += calculateWindSpeedExtraFee(windSpeed);
             }
             extraFee += calculateWeatherPhenomenonExtraFee(weatherPhenomenon);
