@@ -1,18 +1,18 @@
-package spring.course.application.deliveryfee;
+package spring.course.application.model;
 
 import spring.course.application.model.constants.Phenomenon;
 
 import java.util.HashMap;
 import java.util.Map;
-
-public class WeatherInformation {//class to store weather data
+//Class to store weather information
+public class WeatherInformation {
     private String name;
     private Phenomenon phenomenon = Phenomenon.normal;
     private double temperature;
     private double windspeed;
     private final Map<String, Phenomenon> phenomenonMap = new HashMap<String, Phenomenon>() {{
         put("", Phenomenon.normal);
-        put("clear", Phenomenon.normal);
+        put("Clear", Phenomenon.normal);
         put("Few clouds", Phenomenon.normal);
         put("Variable clouds", Phenomenon.normal);
         put("Cloudy with clear spells", Phenomenon.normal);

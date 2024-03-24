@@ -14,15 +14,21 @@ import spring.course.application.webscraping.WebScraper;
 
 import java.sql.Timestamp;
 
-import static spring.course.application.controllers.FeeCalculator.calculateFee;
+import static spring.course.application.deliveryfee.FeeCalculator.calculateFee;
 
 @RestController
 public class UserController {
-    //Function to scrape new data on demand
-    @PostMapping("/scrape")
-    public void scrape(){
-        WebScraper.scrape();
-    }
+    /**
+     * sample requests:
+     * .../calculate/tallinn/car
+     * .../calculate/parnu/car/2024-03-24 09:00:00
+     *
+     * @param city              supported cities - tallinn, tartu, parnu
+     * @param vehicle           supported vehicle types - car, scooter, bike
+     * @param timestamp         format 'yyyy-mm-dd hh:mm:ss' , optional, tries to find the closest weather data to this timestamp
+     * @return ResponseEntity - if an exception occurred, then the error message will be returned, otherwise the calulated fee
+     */
+
     //Function to calculate the fee without a timestamp
     @GetMapping("calculate/{city}/{vehicle}")
     public ResponseEntity<?> getFee(@PathVariable("city") String cityStr,
@@ -73,6 +79,11 @@ public class UserController {
                     new Timestamp(System.currentTimeMillis()));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiException);
         }
+    }
+    //Function to scrape new data on demand
+    @PostMapping("/scrape")
+    public void scrape(){
+        WebScraper.scrape();
     }
 
 }

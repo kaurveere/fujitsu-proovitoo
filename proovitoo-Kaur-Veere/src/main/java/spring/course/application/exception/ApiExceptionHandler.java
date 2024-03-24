@@ -10,9 +10,10 @@ import java.sql.Timestamp;
 public class ApiExceptionHandler {
     @ExceptionHandler(value = ForbiddenVehicleException.class)
     public ResponseEntity<Object> handleForbiddenVehicleException(ForbiddenVehicleException e) {
-        ApiException apiException = new ApiException(e.getMessage(),
-                                                     HttpStatus.BAD_REQUEST,
-                                                     new Timestamp(System.currentTimeMillis()));
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                new Timestamp(System.currentTimeMillis()));
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
 }
