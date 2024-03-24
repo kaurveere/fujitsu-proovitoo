@@ -9,7 +9,7 @@ public class WeatherDataInsertion {
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setTimestamp(1, timestamp);
                 switch (name) {
-                    case "Pärnu" -> preparedStatement.setString(2, "pärnu");
+                    case "Pärnu" -> preparedStatement.setString(2, "parnu");
                     case "Tallinn-Harku" -> preparedStatement.setString(2, "tallinn");
                     case "Tartu-Tõravere" -> preparedStatement.setString(2, "tartu");
                     default -> System.out.println("Wrong city name");

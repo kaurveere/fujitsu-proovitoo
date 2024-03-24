@@ -7,10 +7,11 @@ import java.util.Map;
 
 public class WeatherInformation {//class to store weather data
     private String name;
-    private Phenomenon phenomenon;
+    private Phenomenon phenomenon = Phenomenon.normal;
     private double temperature;
     private double windspeed;
-    private Map<String, Phenomenon> phenomenonMap = new HashMap<String, Phenomenon>() {{
+    private final Map<String, Phenomenon> phenomenonMap = new HashMap<String, Phenomenon>() {{
+        put("", Phenomenon.normal);
         put("clear", Phenomenon.normal);
         put("Few clouds", Phenomenon.normal);
         put("Variable clouds", Phenomenon.normal);

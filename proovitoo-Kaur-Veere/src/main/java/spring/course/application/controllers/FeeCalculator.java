@@ -1,6 +1,7 @@
 package spring.course.application.controllers;
 
 import spring.course.application.deliveryfee.WeatherInformation;
+import spring.course.application.exception.ForbiddenVehicleException;
 import spring.course.application.model.constants.City;
 import spring.course.application.model.constants.Phenomenon;
 import spring.course.application.model.constants.VehicleType;
@@ -11,7 +12,7 @@ import static spring.course.application.service.WeatherDataAccess.retrieveData;
 
 //Orchastrates the fee calculation process
 public class FeeCalculator {
-    public static double calculateFee(City city, VehicleType vehicleType, Timestamp timestamp){
+    public static double calculateFee(City city, VehicleType vehicleType, Timestamp timestamp) throws ForbiddenVehicleException {
 
         WeatherInformation weatherInformation = retrieveData(city, timestamp);
 
@@ -19,6 +20,11 @@ public class FeeCalculator {
         double atef = calculateATEF(weatherInformation, vehicleType);
         double wsef = calculateWSEF(weatherInformation, vehicleType);//TODO - error handeling
         double wpef = calculateWPEF(weatherInformation, vehicleType);//TODO - error handeling
+
+        System.out.println("RBF: " + rbf);
+        System.out.println("ATEF: " + atef);
+        System.out.println("WSEF: " + wsef);
+        System.out.println("WPEF: " + wpef);
 
         return rbf + atef + wsef + wpef;
     }
@@ -38,19 +44,19 @@ public class FeeCalculator {
         return 0;
     }
     //Calculates the exta fee for wind speed
-    private static double calculateWSEF(WeatherInformation weatherInformation, VehicleType vehicleType) {
+    private static double calculateWSEF(WeatherInformation weatherInformation, VehicleType vehicleType) throws ForbiddenVehicleException {
         double windSpeed = weatherInformation.getWindspeed();
         if(vehicleType==VehicleType.bike){
             if(windSpeed>=10 && windSpeed<=20) {
                 return 0.5;
             } else if (windSpeed>20){
-                return 0;//TODO error of usage of vehicle is forbidden
+                throw new ForbiddenVehicleException();
             }
         }
         return 0;
     }
     //Calculates the extra fee for weather phenomens
-    private static double calculateWPEF(WeatherInformation weatherInformation, VehicleType vehicleType) {
+    private static double calculateWPEF(WeatherInformation weatherInformation, VehicleType vehicleType) throws ForbiddenVehicleException {
         Phenomenon phenomenon = weatherInformation.getPhenomenon();
         if(vehicleType != VehicleType.car){
             switch (phenomenon){
@@ -64,7 +70,7 @@ public class FeeCalculator {
                     return 1;
                 }
                 case forbidden -> {
-                    return 0;//TODO - error handel
+                    throw new ForbiddenVehicleException();
                 }
             }
         }
@@ -88,7 +94,9 @@ public class FeeCalculator {
             case parnu -> {
                 return getCarParnuFee();
             }
-            case tallinn -> getCarTallinnFee();
+            case tallinn -> {
+                return getCarTallinnFee();
+            }
         }
         return 0;
     }
@@ -100,7 +108,9 @@ public class FeeCalculator {
             case parnu -> {
                 return getScooterParnuFee();
             }
-            case tallinn -> getScooterTallinnFee();
+            case tallinn -> {
+                return getScooterTallinnFee();
+            }
         }
         return 0;
     }
@@ -116,12 +126,12 @@ public class FeeCalculator {
         }
         return 0;
     }
-    private static double carTartuFee = 4;
-    private static double scooterTartuFee = 3.5;
-    private static double bikeTartuFee = 3;
-    private static double carTallinnFee = 3.5;
-    private static double scooterTallinnFee = 3;
-    private static double bikeTallinnFee = 2.5;
+    private static double carTartuFee = 3.5;
+    private static double scooterTartuFee = 3;
+    private static double bikeTartuFee = 2.5;
+    private static double carTallinnFee = 4;
+    private static double scooterTallinnFee = 3.5;
+    private static double bikeTallinnFee = 3;
     private static double carParnuFee = 3;
     private static double scooterParnuFee = 2.5;
     private static double bikeParnuFee = 2;
