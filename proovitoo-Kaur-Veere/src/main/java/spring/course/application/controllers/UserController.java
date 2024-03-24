@@ -31,8 +31,9 @@ public class UserController {
 
     //Function to calculate the fee without a timestamp
     @GetMapping("calculate/{city}/{vehicle}")
-    public ResponseEntity<?> getFee(@PathVariable("city") String cityStr,
-                                    @PathVariable("vehicle") String vehicleStr) {
+    public ResponseEntity<?> getFee(
+            @PathVariable("city") String cityStr,
+            @PathVariable("vehicle") String vehicleStr) {
         try {
 
             City city = City.valueOf(cityStr);
