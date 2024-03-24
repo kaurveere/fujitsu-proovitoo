@@ -1,6 +1,8 @@
 # Delivery fee calculator
 API usage:
 
+    Run the Main.java file to start the program
+    
     Provide city and vehicle type and get delivery fee based on most recent weather data in that city:
     calculate/{city}/{vehicle}
 
